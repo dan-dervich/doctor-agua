@@ -1,6 +1,6 @@
 import PocketBase from "pocketbase";
 
-const pb = new PocketBase("https://allforwater.pockethost.io");
+const pb = new PocketBase("https://doctor-agua.pockethost.io");
 
 let items = [];
 

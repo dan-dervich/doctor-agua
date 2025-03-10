@@ -1,6 +1,6 @@
 import PocketBase from "pocketbase";
 
-const pb = new PocketBase("https://allforwater.pockethost.io");
+const pb = new PocketBase("https://doctor-agua.pockethost.io");
 
 let productos = [];
 
@@ -22,16 +22,16 @@ try {
       ...item,
       fotoUrl: imageUrl,
       nombre: item.nombre.toUpperCase(),
-      urlName: item.nombre.toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '') // Remove accents
-        .replace(/[^\w\s-]/g, '') // Remove special characters
-        .replace(/\s+/g, '-') // Replace spaces with hyphens
-        .replace(/_/g, '-') // Replace underscores with hyphens
-        .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+      urlName: item.nombre
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // Remove accents
+        .replace(/[^\w\s-]/g, "") // Remove special characters
+        .replace(/\s+/g, "-") // Replace spaces with hyphens
+        .replace(/_/g, "-") // Replace underscores with hyphens
+        .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
         .trim(), // Remove leading/trailing spaces
     };
-
   });
 } catch (error) {
   console.error("Error al autenticarse o al obtener el registro:", error);
