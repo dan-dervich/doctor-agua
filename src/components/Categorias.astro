@@ -1,0 +1,33 @@
+---
+import Card from "./ui/Card.astro";
+import foto from "@assets/foto.png";
+import Slider from "./ui/Slider.astro";
+import { items } from "@lib/categories";
+---
+
+<section class="bg-bgDrAgua flex flex-col justify-center items-center gap-16">
+  <h1
+    class="p-20 sm:text-[36px] text-[25px] text-center"
+    style="
+  color: var(--Pale-Color, #F2F6FF);
+font-style: normal;
+font-weight: 800;
+line-height: normal;"
+  >
+    Nuestras categorías en tendencia
+  </h1>
+  <Slider items={items} />
+  <a
+    href="/categorias"
+    class="text-white hover:bg-opacity-70 cursor-pointer transition-all bg-[#145EFF] m-10 mb-20"
+    style="display: inline-flex;
+padding: 15px 30px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 5px;
+"
+  >
+    Ver todas las categorías
+  </a>
+</section>

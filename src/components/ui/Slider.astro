@@ -1,0 +1,203 @@
+---
+import CardSlider from "./CardSlider.astro";
+
+interface Item {
+  imgSrc: string;
+  nombre: string;
+}
+
+const { items = [] }: { items?: Item[] } = Astro.props;
+---
+
+<div class="carousel-container relative w-full sm:w-3/4 mx-auto">
+  <button
+    id="prev-btn"
+    class="carousel-prev absolute z-10 left-0 top-1/2 -translate-y-1/2 hover:scale-110 hover:cursor-pointer transition-all
+           flex justify-center items-center sm:w-[70px] sm:h-[70px] w-[40px] h-[40px]
+           bg-[#145EFF] rounded-full border border-opacity-50
+           border-[#113583] shadow-lg translate-x-5"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="36"
+      height="36"
+      viewBox="0 0 36 36"
+      fill="none"
+    >
+      <path
+        d="M22.5 28.125L12.375 18L22.5 7.875"
+        stroke="#F2F6FF"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+  </button>
+
+  <div id="carousel" class="overflow-hidden sm:mx-[70px]">
+    <div
+      id="carousel-inner"
+      class="flex transition-transform duration-300 ease-in-out gap-2 sm:gap-4 lg:gap-8 justify-center items-center"
+    >
+      {
+        items.map((item) => (
+          <a
+            href={`/categorias/${item.nombre}`}
+            class="carousel-item flex sm:flex-shrink-0 w-full sm:w-[calc((100%-2rem)/2)] lg:w-[calc((100%-3rem)/3)] xl:w-[calc((100%-4rem)/5)] justify-center items-center"
+          >
+            <CardSlider imgSrc={item.imgSrc} headingText={item.nombre} />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <button
+    id="next-btn"
+    class="carousel-next absolute z-10 right-0 top-1/2 -translate-y-1/2 hover:scale-110 hover:cursor-pointer transition-all
+           flex justify-center items-center sm:w-[70px] sm:h-[70px] w-[40px] h-[40px]
+           bg-[#145EFF] rounded-full border border-opacity-50
+           border-[#113583] shadow-lg -translate-x-5"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="36"
+      height="36"
+      viewBox="0 0 36 36"
+      fill="none"
+    >
+      <path
+        d="M13.5 7.875L23.625 18L13.5 28.125"
+        stroke="#F2F6FF"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+  </button>
+</div>
+
+<script is:inline>
+  (() => {
+    class Carousel {
+      constructor() {
+        this.container = document.getElementById("carousel");
+        this.inner = document.getElementById("carousel-inner");
+        this.items = Array.from(document.querySelectorAll(".carousel-item"));
+        this.prevBtn = document.getElementById("prev-btn");
+        this.nextBtn = document.getElementById("next-btn");
+
+        this.currentIndex = 0;
+        this.itemWidth = 0;
+        this.totalItems = this.items.length;
+        this.itemsPerView = this.calculateItemsPerView();
+        this.isTransitioning = false;
+
+        this.initialize();
+      }
+
+      calculateItemsPerView() {
+        if (window.innerWidth < 640) return 1;
+        if (window.innerWidth < 1024) return 2;
+        if (window.innerWidth < 1280) return 3;
+        return 5;
+      }
+
+      initialize() {
+        // Duplicar el conjunto completo de items múltiples veces
+        const numSets = 5; // Número de veces que duplicamos el conjunto
+        const originalItems = this.items.map((item) => item.cloneNode(true));
+
+        // Agregar los conjuntos duplicados
+        for (let i = 0; i < numSets; i++) {
+          originalItems.forEach((item) => {
+            const clone = item.cloneNode(true);
+            this.inner.appendChild(clone);
+          });
+        }
+
+        this.updateDimensions();
+        this.setInitialPosition();
+
+        // Event listeners
+        this.prevBtn.addEventListener("click", () => this.move("prev"));
+        this.nextBtn.addEventListener("click", () => this.move("next"));
+        window.addEventListener("resize", () => {
+          this.itemsPerView = this.calculateItemsPerView();
+          this.updateDimensions();
+          this.setInitialPosition();
+        });
+
+        // Auto-reposicionamiento cuando llegamos muy lejos en cualquier dirección
+        this.inner.addEventListener("transitionend", () => {
+          this.isTransitioning = false;
+          this.checkAndResetPosition();
+        });
+      }
+
+      updateDimensions() {
+        const item = this.items[0];
+        const style = window.getComputedStyle(item);
+        const marginRight = parseInt(style.marginRight) || 0;
+        const marginLeft = parseInt(style.marginLeft) || 0;
+
+        this.itemWidth = item.offsetWidth + marginRight + marginLeft;
+      }
+
+      setInitialPosition() {
+        // Comenzar desde el primer conjunto de items (no desde el principio del todo)
+        const position = -this.totalItems * this.itemWidth;
+        this.inner.style.transition = "none";
+        this.inner.style.transform = `translateX(${position}px)`;
+        this.currentIndex = this.totalItems;
+
+        // Forzar reflow
+        this.inner.offsetHeight;
+        this.inner.style.transition = "transform 0.3s ease-in-out";
+      }
+
+      move(direction) {
+        if (this.isTransitioning) return;
+        this.isTransitioning = true;
+
+        // Determine move amount based on screen size
+        const moveAmount = window.innerWidth < 640 
+          ? (direction === "next" ? 1 : -1)  // Move 1 item on mobile
+          : (direction === "next" ? 3 : -3); // Move 3 items on larger screens
+          
+        this.currentIndex += moveAmount;
+
+        const position = -this.currentIndex * this.itemWidth;
+        this.inner.style.transform = `translateX(${position}px)`;
+      }
+
+      checkAndResetPosition() {
+        const totalSets = 5;
+        const itemsInView = this.totalItems * totalSets;
+
+        // Si nos movimos muy adelante, volver al segundo conjunto
+        if (this.currentIndex >= this.totalItems * 3) {
+          this.inner.style.transition = "none";
+          this.currentIndex = this.totalItems;
+          const position = -this.currentIndex * this.itemWidth;
+          this.inner.style.transform = `translateX(${position}px)`;
+        }
+
+        // Si nos movimos muy atrás, ir al penúltimo conjunto
+        if (this.currentIndex <= 0) {
+          this.inner.style.transition = "none";
+          this.currentIndex = this.totalItems * 2;
+          const position = -this.currentIndex * this.itemWidth;
+          this.inner.style.transform = `translateX(${position}px)`;
+        }
+
+        // Forzar reflow y restaurar transición
+        this.inner.offsetHeight;
+        this.inner.style.transition = "transform 0.3s ease-in-out";
+      }
+    }
+
+    // Inicializar el carrusel
+    if (document.getElementById("carousel")) {
+      new Carousel();
+    }
+  })();
+</script>

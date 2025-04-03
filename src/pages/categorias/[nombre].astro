@@ -1,0 +1,280 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { items } from "@lib/categories.js";
+import CardItem from "@components/ui/CardItem.astro";
+import { productos } from "@lib/products";
+import { segmentos } from "@lib/segmentos";
+
+export async function getStaticPaths() {
+  return items.map((item) => ({
+    params: { nombre: item.nombre },
+  }));
+}
+
+const { nombre } = Astro.params;
+
+const item = items.find((product) => product.nombre === nombre);
+
+const filteredProductos = productos.filter((product) =>
+  item.productos.includes(product.id)
+);
+
+// const filteredSegmentos = filteredProductos.flatMap((product) =>
+//   segmentos.filter((segmento) => product.segmentos.includes(segmento.id)),
+// );
+const filteredSegmentos = [];
+filteredProductos.forEach((product) => {
+  for (const segmento of segmentos) {
+    if (product.segmentos.includes(segmento.id)) {
+      if (product.segmentos.length > 1 && !segmento.marca) {
+        filteredSegmentos.push(segmento);
+      } else if (product.segmentos.length == 1) {
+        filteredSegmentos.push(segmento);
+      } else if (product.segmentos.length == 0) {
+        filteredSegmentos.push(segmento);
+      }
+    }
+    // const productSegmentos = segmentos.filter((segmento) =>
+    //   product.segmentos.includes(segmento.id)
+    // );
+    // filteredSegmentos.push(...productSegmentos);
+  }
+});
+
+const uniqueSegment = [
+  ...new Set(filteredSegmentos?.map((segmento) => segmento)),
+];
+
+let no_products = false;
+
+if (filteredProductos.length === 0) {
+  no_products = true;
+}
+---
+
+<Layout title="Categorias">
+  {no_products ? (
+    <div class="bg-bgDrAgua flex flex-col justify-center items-center h-screen">
+      <h1
+        class="text-white text-2xl md:text-3xl lg:text-5xl text-center py-5 lg:py-10"
+        style="color: var(--Pale-Color, #F2F6FF);
+font-size: clamp(24px, 5vw, 36px);
+font-style: normal;
+font-weight: 800;
+line-height: 1;"
+      >
+        Pronto tendremos productos en esta categoria...
+        <br/>
+        <br/>
+        ¿Querés saber cuando?
+        <br/>
+        <br/>
+        <span
+          class="text-[#145EFF] font-semibold hover:underline"
+          style="
+            background: linear-gradient(90deg, #145EFF, #00D4FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease-in-out;
+          "
+        >
+          <a
+            href="/contacto"
+            style="
+              display: inline-block;
+              position: relative;
+              transition: all 0.3s ease-in-out;
+            "
+            class="hover:text-shadow hover:text-[#00D4FF]"
+          >
+            Contáctanos
+          </a>
+        </span>
+        <br/>
+      </h1>
+      <a
+        class="bg-[#145EFF] text-white py-2 px-4 rounded flex justify-center items-center segment-button hover:scale-105 transition-all"
+        href="/categorias"
+      >
+        Ver otras categorias
+      </a>
+    </div>
+  ) :
+  <style is:global>
+    html {
+      scroll-behavior: smooth;
+    }
+    * {
+      scroll-behavior: smooth;
+    }
+    .hover\:text-shadow:hover {
+      text-shadow: 0px 4px 10px rgba(0, 212, 255, 0.8);
+    }
+  </style>
+  <section
+    class="bg-bgDrAgua flex justify-center items-center flex-col pt-40 gap-8 overflow-x-hidden"
+    style="
+border-bottom: 1px solid var(--Border-Color, #13254F);
+"
+  >
+    <h2
+      class="text-center"
+      style="color: var(--Pale-Color, #F2F6FF);
+      font-size: clamp(12px, 3vw, 14px);
+font-style: normal;
+font-weight: 400;
+line-height: 1.4;
+letter-spacing: 2px;"
+    >
+      <a class="text-white/75" href="/">INICIO</a>
+      <span class="text-white/75"> / </span>
+      <a class="text-white/75" href="/categorias">CATEGORIAS</a> / {item.nombre}
+    </h2>
+    <h1
+      class="flex justify-center items-center text-center"
+      style="color: #FFF;
+      font-size: clamp(24px, 5vw, 36px);
+      font-style: normal;
+      font-weight: 800;
+line-height: 1.2;"
+    >
+      {item.nombre.charAt(0).toUpperCase() + item.nombre.slice(1).toLowerCase()}
+    </h1>
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-wrap justify-center lg:gap-5 md:gap-2 gap-1">
+        {
+          uniqueSegment.length > 0 &&
+            uniqueSegment
+              .filter((segment) => !segment.marca)
+              .map((segment) => (
+                <a
+                  class="bg-[#145EFF] text-white py-2 px-4 rounded flex justify-center items-center segment-button hover:scale-105 transition-all"
+                  href={`#${segment.id}`}
+                >
+                  {segment.nombre}
+                </a>
+              ))
+        }
+      </div>
+      <div class="flex flex-wrap justify-center lg:gap-5 md:gap-2 gap-1">
+        {
+          uniqueSegment.length > 0 &&
+            uniqueSegment
+              .filter((segment) => segment.marca)
+              .map((segment) => (
+                <a
+                class="segment-button hover:scale-105 transition-all shadow-md"
+                  href={"#segmento-" + segment.nombre}
+                >
+                  <img
+                    src={segment.fotoUrl}
+                    alt={segment.nombre}
+                    class="h-14 object-cover rounded-md"
+                    />
+                </a>
+              ))
+        }
+      </div>
+    </div>
+    <div
+      class="w-screen"
+      style="width: 100vw;
+      height: 1px;
+      flex-shrink: 0;
+      border-radius: 100px;
+      background: radial-gradient(50% 50% at 50% 50%, #13254F 0%, rgba(19, 37, 79, 0.00) 100%);"
+      >
+    </div>
+    <div class="lg:p-10 p-5">
+      {
+        uniqueSegment.length > 0 ? (
+          <>
+            {uniqueSegment.map((segment) => {
+              const productosPorSegmento = filteredProductos.filter((product) =>
+              product.segmentos.includes(segment.id)
+              );
+
+              if (productosPorSegmento.length > 0) {
+                return (
+                  <section id={segment.id} class="mb-10">
+                    <h2
+                      id={`segmento-${segment.nombre}`}
+                      class="text-white font-semibold text-2xl md:text-3xl lg:text-5xl text-center py-5 lg:py-10"
+                      >
+                      {segment.nombre}
+                    </h2>
+                    <div
+                      class={`grid grid-cols-1 md:grid-cols-2 ${productosPorSegmento.length <= 3 ? "lg:grid-cols-3 justify-center" : "lg:grid-cols-4"} gap-4`}
+                    >
+                      {productosPorSegmento.map((product) => (
+                        <CardItem
+                        key={product.id}
+                        imgSrc={product.fotoUrl}
+                          nombre={product.nombre}
+                          nombreUrl={product.urlName}
+                          desc={product.mini_desc}
+                          />
+                      ))}
+                    </div>
+                  </section>
+                );
+              }
+              return null;
+            })}
+            {(() => {
+              const productosSinSegmento = filteredProductos.filter(
+                (product) =>
+                !product.segmentos || product.segmentos.length === 0
+              );
+
+              if (productosSinSegmento.length > 0) {
+                const gridCols =
+                  productosSinSegmento.length < 3
+                  ? "grid-cols-3 justify-center"
+                  : productosSinSegmento.length < 4
+                  ? "grid-cols-3"
+                  : "grid-cols-3";
+                return (
+                  <section class="mb-10">
+                    <h2 class="text-white font-semibold text-2xl md:text-3xl lg:text-5xl text-center py-5 lg:py-10">
+                      Otros productos
+                    </h2>
+                    <div
+                      class={`grid grid-cols-1 md:grid-cols-2 ${productosSinSegmento.length <= 3 ? "lg:grid-cols-3 justify-center" : "lg:grid-cols-4"} gap-4`}
+                    >
+                      {productosSinSegmento.map((product) => (
+                        <CardItem
+                        key={product.id}
+                          imgSrc={product.fotoUrl}
+                          nombre={product.nombre}
+                          nombreUrl={product.urlName}
+                          desc={product.mini_desc}
+                          />
+                      ))}
+                    </div>
+                  </section>
+                );
+              }
+              return null;
+            })()}
+          </>
+        ) : (
+          <div
+            class={`grid grid-cols-1 md:grid-cols-2 ${filteredProductos.length <= 3 ? "lg:grid-cols-3 justify-center" : "lg:grid-cols-4"} gap-4`}
+          >
+            {filteredProductos.map((product) => (
+              <CardItem
+                key={product.id}
+                imgSrc={product.fotoUrl}
+                nombre={product.nombre}
+                nombreUrl={product.urlName}
+                desc={product.mini_desc}
+                />
+              ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+}
+</Layout>

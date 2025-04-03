@@ -1,0 +1,193 @@
+<section
+  class="bg-bgDrAgua flex justify-center items-center flex-col pt-40 gap-8"
+  style="
+border-bottom: 1px solid var(--Border-Color, #13254F);
+"
+>
+  <h3 class="text-white text-sm font-normal tracking-[2.8px]">
+    <span class="text-white/75">INICIO</span> / CONTACTO
+  </h3>
+
+  <h1 class="text-white text-4xl font-extrabold mb-10">Contáctanos</h1>
+
+  <div
+    style="border-radius: 100px;
+background: radial-gradient(50% 50% at 50% 50%, #13254F 0%, rgba(19, 37, 79, 0.00) 100%);
+width: 1920px;
+height: 1px;
+flex-shrink: 0;"
+  >
+  </div>
+
+  <form id="contactForm" class="w-8/12 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div class="flex flex-col gap-2">
+        <label for="name" class="text-white text-base font-medium p-2">
+          Nombre
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Introduce tu nombre"
+          class="p-5 rounded bg-[#244180] border border-[#13254F] text-[#445A8B] focus:outline-none focus:border-blue-500"
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="email" class="text-white text-base font-medium p-2">
+          Correo electrónico
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Introduce tu correo electrónico"
+          class="p-5 rounded bg-[#244180] border border-[#13254F] text-[#445A8B] focus:outline-none focus:border-blue-500"
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="phone" class="text-white text-base font-medium p-2">
+          Teléfono (Opcional)
+        </label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          placeholder="Introduce tu teléfono"
+          class="p-5 rounded bg-[#244180] border border-[#13254F] text-[#445A8B] focus:outline-none focus:border-blue-500"
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="fax" class="text-white text-base font-medium p-2">
+          Fax (Opcional)
+        </label>
+        <input
+          type="text"
+          id="fax"
+          name="fax"
+          placeholder="Introduce tu fax"
+          class="p-5 rounded bg-[#244180] border border-[#13254F] text-[#445A8B] focus:outline-none focus:border-blue-500"
+        />
+      </div>
+      <div class="flex flex-col gap-2 md:col-span-2 mb-5">
+        <label for="message" class="text-white text-base font-medium p-2">
+          Mensaje
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          placeholder="Introduce tu mensaje"
+          rows="4"
+          class="p-5 rounded bg-[#244180] border border-[#13254F] text-[#445A8B] focus:outline-none focus:border-blue-500"
+        ></textarea>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="w-full mt-10 mb-40 bg-blue-600 text-white text-lg py-4 px-6 rounded font-medium hover:bg-blue-700 transition-colors flex justify-center items-center gap-x-2"
+    >
+      Envía tu mensaje
+      <div style="width: 16px;
+height: 16px;
+flex-shrink: 0;">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="17"
+          height="16"
+          viewBox="0 0 17 16"
+          fill="none"
+        >
+          <path
+            d="M9.674 8.00664L2.50067 7.28398L2.5 2.71598C2.50009 2.59399 2.53134 2.47405 2.59079 2.36754C2.65024 2.26102 2.73592 2.17146 2.8397 2.10735C2.94348 2.04324 3.06191 2.0067 3.18377 2.00121C3.30563 1.99572 3.42688 2.02146 3.536 2.07598L14.104 7.35998C14.2227 7.41952 14.3225 7.51092 14.3923 7.62394C14.462 7.73697 14.499 7.86716 14.499 7.99998C14.499 8.13279 14.462 8.26299 14.3923 8.37601C14.3225 8.48903 14.2227 8.58043 14.104 8.63998L3.53733 13.924C3.42821 13.9785 3.30697 14.0042 3.18511 13.9987C3.06325 13.9932 2.94481 13.9567 2.84103 13.8926C2.73725 13.8285 2.65157 13.7389 2.59212 13.6324C2.53267 13.5259 2.50142 13.406 2.50133 13.284V8.71598L9.67467 8.00664H9.674Z"
+            fill="#F2F6FF"></path>
+        </svg>
+      </div>
+    </button>
+  </form>
+</section>
+
+<style>
+  input::placeholder,
+  textarea::placeholder {
+    color: #6f91dc;
+  }
+</style>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+
+<script type="module">
+  document
+    .getElementById("contactForm")
+    .addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const message = document.getElementById("message").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+
+      const data = {
+        name: name,
+        msg: message,
+        email: email,
+        tel: phone,
+      };
+
+      const loadingToast = Toastify({
+        text: "Enviando mensaje...",
+        duration: -1,
+        close: true,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "#3498db",
+      }).showToast();
+
+      try {
+        const response = await fetch(
+          "https://contact-app-murex.vercel.app/afw/send-mail",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
+
+        loadingToast.hideToast();
+
+        if (response.ok) {
+          Toastify({
+            text: "Mensaje enviado correctamente.",
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "#28a745",
+          }).showToast();
+
+          document.getElementById("contactForm").reset();
+        } else {
+          Toastify({
+            text: "Hubo un error al enviar el mensaje.",
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "#dc3545",
+          }).showToast();
+        }
+      } catch (error) {
+        console.error("Error:", error);
+
+        loadingToast.hideToast();
+        Toastify({
+          text: "Hubo un error en la solicitud.",
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#dc3545",
+        }).showToast();
+      }
+    });
+</script>

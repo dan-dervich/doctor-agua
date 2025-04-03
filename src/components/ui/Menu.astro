@@ -1,0 +1,186 @@
+---
+import HamburgerMenu from "@components/icons/HamburgerMenu.astro";
+import Search from "@components/ui/Search";
+import { items } from "@lib/categories";
+import { marcas } from "@lib/marcas";
+
+let pathname = Astro.url.pathname;
+
+pathname = decodeURIComponent(pathname);
+---
+
+<div class="relative">
+  <button
+    id="menu-button"
+    class="bg-[#145EFF] w-[70px] h-[70px] p-6 flex justify-center items-center flex-shrink-0 hover:bg-blue-600 transition-colors z-10 text-white"
+  >
+    <HamburgerMenu />
+  </button>
+
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40">
+  </div>
+
+  <div
+    id="sidebar"
+    class="fixed top-0 right-0 h-screen w-[320px] bg-bgDrAgua transform translate-x-full transition-transform duration-300 ease-in-out z-50 flex flex-col"
+    style="border-left: 1px solid var(--Border-Color, #13254F);"
+  >
+    <div class="flex justify-between items-center">
+      <button
+        id="close-menu"
+        class="bg-[#145EFF] w-[70px] h-[70px] p-6 flex justify-center items-center hover:bg-blue-600 transition-colors text-white"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
+          ></path>
+        </svg>
+      </button>
+      <div class="">
+        <Search client:load />
+      </div>
+    </div>
+    <nav class="flex flex-col items-center gap-20 mt-32 text-white">
+      <a
+        class="hover:cursor-pointer relative after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#305197] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left text-[#F2F6FF] text-xl font-medium"
+        href="/">Inicio</a
+      >
+      <div class="flex flex-col items-center w-full">
+        <button
+          id="categorias-btn"
+          class="flex flex-row justify-center items-center text-center hover:cursor-pointer relative after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#305197] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left text-[#F2F6FF] text-xl font-medium mb-2"
+          >Categorias
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"></path>
+          </svg></button
+        >
+        <div
+          id="categorias-dropdown"
+          class="hidden grid grid-cols-1 w-full bg-[#0B1633] p-1 rounded-md overflow-y-auto max-h-[300px]"
+        >
+          {
+            items.map((item) => (
+              <a
+                href={`/categorias/${item.nombre}`}
+                class={`text-base text-wrap text-[#F2F6FF] hover:text-[#145EFF] transition-colors py-2 px-3 text-center whitespace-nowrap ${pathname === `/categorias/${item.nombre}` ? "bg-[#145EFF]" : ""}`}
+              >
+                {item.nombre}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <div class="flex flex-col items-center w-full">
+        <button
+          id="marcas-btn"
+          class="flex flex-row justify-center items-center text-center hover:cursor-pointer relative after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#305197] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left text-[#F2F6FF] text-xl font-medium mb-2"
+          >Marcas
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"></path>
+          </svg></button
+        >
+        <div
+          id="marcas-dropdown"
+          class="hidden grid grid-cols-1 w-full bg-[#0B1633] py-2 px-4 rounded-md overflow-y-auto max-h-[300px]"
+        >
+          {
+            marcas.map((marca) => (
+              <a
+                href={`/marcas/${marca.nombre}`}
+                class={`flex text-wrap justify-center items-center text-sm text-[#F2F6FF] hover:text-[#145EFF] transition-colors py-2 px-3 text-center ${pathname === `/marcas/${marca.nombre}` ? "bg-[#145EFF]" : ""}`}
+              >
+                {marca.nombre}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <a
+        class="hover:cursor-pointer relative after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#305197] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left text-[#F2F6FF] text-xl font-medium"
+        href="/contacto">Contacto</a
+      >
+    </nav>
+  </div>
+</div>
+
+<script>
+  function setupMenuHandlers() {
+    const menuButton = document.getElementById("menu-button");
+    const closeButton = document.getElementById("close-menu");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const categoriasBtn = document.getElementById("categorias-btn");
+    const marcasBtn = document.getElementById("marcas-btn");
+    const categoriasDropdown = document.getElementById("categorias-dropdown");
+    const marcasDropdown = document.getElementById("marcas-dropdown");
+
+    // Remove existing event listeners if any
+    const newMenuButton = menuButton?.cloneNode(true);
+    const newCloseButton = closeButton?.cloneNode(true);
+    const newCategoriasBtn = categoriasBtn?.cloneNode(true);
+    const newMarcasBtn = marcasBtn?.cloneNode(true);
+
+    menuButton?.parentNode?.replaceChild(newMenuButton, menuButton);
+    closeButton?.parentNode?.replaceChild(newCloseButton, closeButton);
+    categoriasBtn?.parentNode?.replaceChild(newCategoriasBtn, categoriasBtn);
+    marcasBtn?.parentNode?.replaceChild(newMarcasBtn, marcasBtn);
+
+    function closeMenu() {
+      sidebar?.classList.add("translate-x-full");
+      overlay?.classList.add("hidden");
+      categoriasDropdown?.classList.add("hidden");
+      marcasDropdown?.classList.add("hidden");
+    }
+
+    newMenuButton?.addEventListener("click", () => {
+      sidebar?.classList.remove("translate-x-full");
+      overlay?.classList.remove("hidden");
+    });
+
+    newCloseButton?.addEventListener("click", closeMenu);
+
+    overlay?.addEventListener("click", closeMenu);
+
+    newCategoriasBtn?.addEventListener("click", () => {
+      categoriasDropdown?.classList.toggle("hidden");
+      marcasDropdown?.classList.add("hidden");
+    });
+
+    newMarcasBtn?.addEventListener("click", () => {
+      marcasDropdown?.classList.toggle("hidden");
+      categoriasDropdown?.classList.add("hidden");
+    });
+  }
+
+  // Initial setup
+  setupMenuHandlers();
+
+  // Re-run setup when the page content updates
+  document.addEventListener("astro:page-load", setupMenuHandlers);
+</script>

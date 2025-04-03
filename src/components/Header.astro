@@ -1,0 +1,157 @@
+---
+import Logo from "@assets/logo.jpeg";
+import Search from "@components/ui/Search";
+import Menu from "@components/ui/Menu.astro";
+import { items } from "@lib/categories";
+import { marcas } from "@lib/marcas";
+
+let pathname = Astro.url.pathname;
+
+pathname = decodeURIComponent(pathname);
+---
+
+<header
+  class="bg-bgDrAgua flex justify-between items-center fixed lg:top-0 bottom-0 w-full z-40"
+  style="border-bottom: 1px solid var(--Border-Color, #13254F);
+height: 70px;
+flex-shrink: 0;"
+>
+  <a
+    href="/"
+    class="sm:px-10 px-2 text-white"
+    style="display: inline-flex;
+justify-content: center;
+align-items: center;
+gap: 10px;"
+  >
+    <img src={Logo.src} alt="Dr. Agua Logo" class="w-auto h-[30px] bg-white" />
+  </a>
+  <div class="lg:flex hidden">
+    <nav
+      class="text-white ml-[100px] mr-[150px]"
+      style="display: inline-flex;
+justify-content: center;
+align-items: center;
+gap: 50px;"
+    >
+      <a
+        class="hover:cursor-pointer relative after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#305197] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left"
+        style="display: flex;
+justify-content: center;
+align-items: center;
+color: var(--Pale-Color, #F2F6FF);
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;"
+        href="/">Inicio</a
+      >
+      <div class="relative group">
+        <a
+          class="hover:cursor-pointer relative after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#305197] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left flex items-center gap-2"
+          style="display: flex;
+justify-content: center;
+align-items: center;
+color: var(--Pale-Color, #F2F6FF);
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;"
+          href="/categorias"
+        >
+          Categorias
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </a>
+        <div
+          class="absolute grid grid-cols-5 -left-[calc(43.5vw-43.5%)] mt-5 w-screen bg-bgDrAgua rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+          style="border: 1px solid var(--Border-Color, #13254F); max-width: 100vw;"
+        >
+          {
+            items.map((item) => (
+              <a
+                href={`/categorias/${item.nombre}`}
+                class={`flex justify-center items-center px-6 py-4 text-base text-[#F2F6FF] hover:bg-[#145EFF] transition-colors text-center ${pathname === `/categorias/${item.nombre}` ? "bg-[#145EFF]" : ""}`}
+              >
+                {item.nombre}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <div class="relative group">
+        <a
+          class="hover:cursor-pointer relative after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#305197] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left flex items-center gap-2"
+          style="display: flex;
+justify-content: center;
+align-items: center;
+color: var(--Pale-Color, #F2F6FF);
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;"
+          href="/marcas"
+        >
+          Marcas
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </a>
+        <div
+          class="absolute grid grid-cols-5 -left-[calc(55.5vw-55.5%)] mt-5 w-screen bg-bgDrAgua rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+          style="border: 1px solid var(--Border-Color, #13254F);"
+        >
+          {
+            marcas.map((marca) => (
+              <a
+                href={`/marcas/${marca.nombre}`}
+                class={`flex justify-center items-center px-6 py-4 text-base text-[#F2F6FF] hover:bg-[#145EFF] transition-colors text-center ${pathname === `/marcas/${marca.nombre}` ? "bg-[#145EFF]" : ""}`}
+              >
+                {marca.nombre}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <a
+        class="hover:cursor-pointer relative after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#305197] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left"
+        style="display: flex;
+justify-content: center;
+align-items: center;
+color: var(--Pale-Color, #F2F6FF);
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;"
+        href="/contacto">Contacto</a
+      >
+    </nav>
+  </div>
+  <div class="lg:flex hidden">
+    <Search client:load />
+  </div>
+  <div class="lg:hidden flex">
+    <Menu />
+  </div>
+</header>

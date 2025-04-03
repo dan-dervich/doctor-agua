@@ -1,0 +1,19 @@
+---
+const { imgSrc, headingText } = Astro.props;
+---
+
+<div
+  class="flex flex-col items-center gap-4 p-3 pb-6 rounded-lg border-t border-r border-l border-[rgba(19,37,79,0.50)] bg-[rgba(5,17,46,0.50)] hover:opacity-75 transition-all w-full sm:w-[200px] sm:h-[300px] h-[400px]"
+>
+  <img
+    class="w-full sm:h-[160px] h-[300px] object-cover rounded-lg"
+    loading="eager"
+    src={imgSrc}
+    alt=""
+  />
+  <h2
+    class="text-[#93A0BC] text-sm font-medium tracking-[3.2px] text-center flex justify-center items-center"
+  >
+    {headingText}
+  </h2>
+</div>

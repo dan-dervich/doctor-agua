@@ -1,0 +1,101 @@
+---
+import Footer from "./Footer.astro";
+import Card from "./ui/Card.astro";
+import { items } from "@lib/categories";
+---
+
+<section
+  class="bg-bgDrAgua flex justify-center items-center flex-col pt-40 gap-8 overflow-x-hidden"
+  style="
+border-bottom: 1px solid var(--Border-Color, #13254F);
+"
+>
+  <h2
+    class="text-center"
+    style="color: var(--Pale-Color, #F2F6FF);
+font-size: clamp(12px, 2vw, 14px);
+font-style: normal;
+font-weight: 400;
+line-height: 1.4;
+letter-spacing: 2px;"
+  >
+    <a href="/" class="text-white/75">INICIO</a> / CATEGORIAS
+  </h2>
+  <h1
+    class="text-center"
+    style="color: #FFF;
+font-size: clamp(24px, 5vw, 36px);
+font-style: normal;
+font-weight: 800;
+line-height: 1.2;"
+  >
+    Categorias
+  </h1>
+  <div class="flex flex-row justify-center items-center">
+    <button
+      data-sort="asc"
+      class="sort-btn hover:text-white text-[#445A8B] transition-colors"
+      style="font-size: clamp(16px, 3vw, 20px); font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 4px;"
+    >
+      A-Z
+    </button>
+    <span
+      style="color: var(--Others-Color, #445A8B); font-size: clamp(16px, 3vw, 20px); margin: 0 10px;"
+      >|</span
+    >
+    <button
+      data-sort="desc"
+      class="sort-btn hover:text-white text-[#445A8B] transition-colors"
+      style="font-size: clamp(16px, 3vw, 20px); font-style: normal; font-weight: 400; line-height: normal; letter-spacing: 4px;"
+    >
+      Z-A
+    </button>
+  </div>
+  <div
+    class="w-screen"
+    style="width: 100vw; height: 1px; flex-shrink: 0; border-radius: 100px; background: radial-gradient(50% 50% at 50% 50%, #13254F 0%, rgba(19, 37, 79, 0.00) 100%);"
+  >
+  </div>
+  <div
+    class="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4 md:p-10 lg:p-20"
+    id="categories-grid"
+  >
+    {
+      items.map((item) => (
+        <a
+          href={`/categorias/${item.nombre}`}
+          class="category-item"
+          data-name={item.nombre}
+        >
+          <Card imgSrc={item.imgSrc} headingText={item.nombre} />
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const categoriesGrid = document.getElementById("categories-grid");
+  const sortButtons = document.querySelectorAll(".sort-btn");
+
+  sortButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const order = button.getAttribute("data-sort");
+      const items = Array.from(categoriesGrid.children);
+
+      items.sort((a, b) => {
+        const nameA = a.getAttribute("data-name").toLowerCase();
+        const nameB = b.getAttribute("data-name").toLowerCase();
+
+        if (order === "asc") {
+          return nameA.localeCompare(nameB);
+        } else {
+          return nameB.localeCompare(nameA);
+        }
+      });
+
+      // Clear the grid and append sorted items
+      items.forEach((item) => categoriesGrid.appendChild(item));
+    });
+  });
+</script>

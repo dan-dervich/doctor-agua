@@ -1,0 +1,252 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { productos } from "@lib/products";
+import { marcas } from "@lib/marcas";
+import CardItem from "@components/ui/CardItem.astro";
+import { segmentos } from "@lib/segmentos";
+
+export async function getStaticPaths() {
+  return marcas.map((marca) => ({
+    params: { nombre: marca.nombre },
+  }));
+}
+
+const { nombre } = Astro.params;
+const marca = marcas.find((m) => m.nombre === nombre);
+
+// Filtrar los productos que contienen el ID de la marca en su lista de segmentos
+const filteredProductos = productos.filter((product) =>
+  product.segmentos.includes(marca.id)
+);
+
+const filteredSegmentos = filteredProductos.flatMap((product) =>
+  segmentos.filter((segmento) => product.segmentos.includes(segmento.id))
+);
+
+const uniqueSegment = [
+  ...new Set(filteredSegmentos.map((segmento) => segmento)),
+];
+uniqueSegment.sort((a, b) => {
+  if (a.marca && !b.marca) return 1; // a es marca, b no
+  if (!a.marca && b.marca) return -1; // b es marca, a no
+  return a.nombre.localeCompare(b.nombre); // ambos son marcas o ninguno lo es
+});
+---
+
+<Layout title="Marcas">
+  <style is:global>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Optional: for better cross-browser support */
+    * {
+      scroll-behavior: smooth;
+    }
+  </style>
+  <section
+    class="bg-bgDrAgua flex justify-center text-center items-center flex-col pt-40 gap-8 overflow-x-hidden"
+    style="
+  border-bottom: 1px solid var(--Border-Color, #13254F);
+  "
+  >
+    <h2
+      style="color: var(--Pale-Color, #F2F6FF);
+  font-size: clamp(12px, 3vw, 14px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 2px;"
+    >
+      <a class="text-white/75" href="/">INICIO</a>
+      <span class="text-white/75"> / </span>
+      <a class="text-white/75" href="/categorias">CATEGORIAS</a>
+      / {marca.nombre}
+    </h2>
+    <h1
+      style="color: #FFF;
+  font-size: clamp(24px, 5vw, 36px);
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.2;"
+    >
+      {
+        marca.nombre.charAt(0).toUpperCase() +
+          marca.nombre.slice(1).toLowerCase()
+      }
+    </h1>
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-wrap justify-center lg:gap-5 md:gap-2 gap-1">
+        {
+          uniqueSegment.length > 0 &&
+            uniqueSegment
+              .filter((segment) => segment.marca)
+              .map((segment) =>
+                segment.marca ? (
+                  ""
+                ) : (
+                  <a
+                    class="segment-button hover:scale-105 transition-all shadow-md"
+                    href={"#segmento-" + segment.nombre}
+                  >
+                    <img
+                      src={segment.fotoUrl}
+                      alt={segment.nombre}
+                      class="h-14 object-cover rounded-md"
+                    />
+                  </a>
+                )
+              )
+        }
+      </div>
+      <div class="flex flex-wrap justify-center lg:gap-5 md:gap-2 gap-1">
+        {
+          uniqueSegment.length > 0 &&
+            uniqueSegment
+              .filter((segment) => !segment.marca)
+              .map((segment) => (
+                <a
+                  class="bg-[#145EFF] text-white py-2 px-4 rounded flex justify-center items-center segment-button hover:scale-105 transition-all"
+                  href={`#${segment.id}`}
+                >
+                  {segment.nombre}
+                </a>
+              ))
+        }
+      </div>
+    </div>
+    <div
+      class="w-screen"
+      style="width: 100vw;
+  height: 1px;
+  flex-shrink: 0;
+  border-radius: 100px;
+  background: radial-gradient(50% 50% at 50% 50%, #13254F 0%, rgba(19, 37, 79, 0.00) 100%);"
+    >
+    </div>
+    <div class="p-10">
+      {
+        uniqueSegment.length > 0 ? (
+          <>
+            {uniqueSegment.map((segment) => {
+              const productosPorSegmento = filteredProductos.filter((product) =>
+                product.segmentos.includes(segment.id)
+              );
+              if (
+                productosPorSegmento.length > 0 &&
+                !(segment.marca && uniqueSegment.length > 1)
+              ) {
+                return (
+                  <section id={segment.id} class="mb-10">
+                    <h2 class="text-white font-semibold text-2xl md:text-3xl lg:text-5xl text-center py-5 lg:py-10">
+                      {segment.nombre}
+                    </h2>
+                    <div
+                      class={`grid grid-cols-1 md:grid-cols-2 ${productosPorSegmento.length <= 3 ? "lg:grid-cols-3 justify-center" : "lg:grid-cols-4"} gap-4`}
+                    >
+                      {productosPorSegmento.map((product) => {
+                        return (
+                          <CardItem
+                            key={product.id}
+                            imgSrc={product.fotoUrl}
+                            nombre={product.nombre}
+                            nombreUrl={product.urlName}
+                            desc={product.mini_desc}
+                          />
+                        );
+                      })}
+                    </div>
+                  </section>
+                );
+              } else if (productosPorSegmento.length > 0 && segment.marca) {
+                let atLeastOne = false;
+                for (let i = 0; i < productosPorSegmento.length; i++) {
+                  if (productosPorSegmento[i].segmentos.length == 1) {
+                    atLeastOne = true;
+                    break;
+                  }
+                }
+                if (!atLeastOne) return null;
+                return (
+                  <section id={segment.id} class="mb-10">
+                    <h2 class="text-white font-semibold text-2xl md:text-3xl lg:text-5xl text-center py-5 lg:py-10">
+                      Otros Productos De {segment.nombre}
+                    </h2>
+                    <div
+                      class={`grid grid-cols-1 md:grid-cols-2 ${productosPorSegmento.length <= 3 ? "lg:grid-cols-3 justify-center" : "lg:grid-cols-4"} gap-4`}
+                    >
+                      {productosPorSegmento.map((product) => {
+                        if (product.segmentos.length == 1)
+                          return (
+                            <CardItem
+                              key={product.id}
+                              imgSrc={product.fotoUrl}
+                              nombre={product.nombre}
+                              nombreUrl={product.urlName}
+                              desc={product.mini_desc}
+                            />
+                          );
+                        return null;
+                      })}
+                    </div>
+                  </section>
+                );
+              }
+              return null;
+            })}
+            {(() => {
+              const productosSinSegmento = filteredProductos.filter(
+                (product) =>
+                  !product.segmentos || product.segmentos.length === 0
+              );
+
+              if (productosSinSegmento.length > 0) {
+                const gridCols =
+                  productosSinSegmento.length < 3
+                    ? "grid-cols-3 justify-center"
+                    : productosSinSegmento.length < 4
+                      ? "grid-cols-3"
+                      : "grid-cols-3";
+                return (
+                  <section class="mb-10">
+                    <h2 class="text-light-blue font-semibold text-5xl text-center py-10">
+                      Otros productos
+                    </h2>
+                    <div
+                      class={`grid grid-cols-1 md:grid-cols-2 ${productosSinSegmento.length <= 3 ? "lg:grid-cols-3 justify-center" : "lg:grid-cols-4"} gap-4`}
+                    >
+                      {productosSinSegmento.map((product) => (
+                        <CardItem
+                          key={product.id}
+                          imgSrc={product.fotoUrl}
+                          nombre={product.nombre}
+                          nombreUrl={product.urlName}
+                          desc={product.mini_desc}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                );
+              }
+              return null;
+            })()}
+          </>
+        ) : (
+          <div
+            class={`grid grid-cols-1 md:grid-cols-2 ${filteredProductos.length <= 3 ? "lg:grid-cols-3 justify-center" : "lg:grid-cols-4"} gap-4`}
+          >
+            {filteredProductos.map((product) => (
+              <CardItem
+                key={product.id}
+                imgSrc={product.fotoUrl}
+                nombre={product.nombre}
+                nombreUrl={product.urlName}
+                desc={product.mini_desc}
+              />
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+</Layout>
