@@ -7,7 +7,9 @@ let items = [];
 try {
   // await pb.admins.authWithPassword("pedro@gmail.com", "Pedro12345");
 
-  const records = await pb.collection("categorias_es").getList(0, 100);
+  const records = await pb.collection("categorias_es").getList(0, 100, {
+    sort: "+orden"
+  });
   items = records.items.map((item) => {
     const collectionId = "categorias_es"; // ID de la colección
     const recordId = item.id; // ID del registro actual

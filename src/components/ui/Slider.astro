@@ -86,8 +86,21 @@ const { items = [] }: { items?: Item[] } = Astro.props;
         this.nextBtn = document.getElementById("next-btn");
 
         this.currentIndex = 0;
+        console.log(this.currentIndex);
         this.itemWidth = 0;
-        this.totalItems = this.items.length;
+        this.totalItems =
+          this.items.length +
+          (this.calculateItemsPerView() == 1
+            ? 2
+            : this.calculateItemsPerView() == 2
+              ? 3
+              : this.calculateItemsPerView() == 3
+                ? 5
+                : this.calculateItemsPerView() == 5
+                  ? 8
+                  : 0); // Total items visible in the carousel
+        console.log(this.calculateItemsPerView());
+        // 2 for mobile 7 for desktop
         this.itemsPerView = this.calculateItemsPerView();
         this.isTransitioning = false;
 
@@ -95,6 +108,7 @@ const { items = [] }: { items?: Item[] } = Astro.props;
       }
 
       calculateItemsPerView() {
+        console.log(window.innerWidth);
         if (window.innerWidth < 640) return 1;
         if (window.innerWidth < 1024) return 2;
         if (window.innerWidth < 1280) return 3;
@@ -135,19 +149,17 @@ const { items = [] }: { items?: Item[] } = Astro.props;
 
       updateDimensions() {
         const item = this.items[0];
-        const style = window.getComputedStyle(item);
-        const marginRight = parseInt(style.marginRight) || 0;
-        const marginLeft = parseInt(style.marginLeft) || 0;
 
-        this.itemWidth = item.offsetWidth + marginRight + marginLeft;
+        this.itemWidth = item.clientWidth;
       }
 
       setInitialPosition() {
         // Comenzar desde el primer conjunto de items (no desde el principio del todo)
         const position = -this.totalItems * this.itemWidth;
         this.inner.style.transition = "none";
+        console.log(position);
         this.inner.style.transform = `translateX(${position}px)`;
-        this.currentIndex = this.totalItems;
+        this.currentIndex = this.totalItems + 1;
 
         // Forzar reflow
         this.inner.offsetHeight;
@@ -159,13 +171,21 @@ const { items = [] }: { items?: Item[] } = Astro.props;
         this.isTransitioning = true;
 
         // Determine move amount based on screen size
-        const moveAmount = window.innerWidth < 640 
-          ? (direction === "next" ? 1 : -1)  // Move 1 item on mobile
-          : (direction === "next" ? 3 : -3); // Move 3 items on larger screens
-          
+
+        let moveAmount = 0;
+        if (window.innerWidth < 640) {
+          moveAmount = direction === "next" ? 1 : -1; // Move 1 item on mobile
+        } else if (window.innerWidth < 1280) {
+          moveAmount = direction === "next" ? 2 : -2; // Move 3 items on larger screens
+        } else {
+          moveAmount = direction === "next" ? 3 : -3; // Move 5 items on larger screens
+        }
+
         this.currentIndex += moveAmount;
 
         const position = -this.currentIndex * this.itemWidth;
+        console.log(this.itemWidth);
+        console.log(position);
         this.inner.style.transform = `translateX(${position}px)`;
       }
 
@@ -200,4 +220,5 @@ const { items = [] }: { items?: Item[] } = Astro.props;
       new Carousel();
     }
   })();
+  browser.tabs.setZoom(1);
 </script>
