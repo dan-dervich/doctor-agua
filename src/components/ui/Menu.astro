@@ -22,7 +22,7 @@ pathname = decodeURIComponent(pathname);
 
   <div
     id="sidebar"
-    class="fixed top-0 right-0 h-screen w-[320px] bg-bgDrAgua transform translate-x-full transition-transform duration-300 ease-in-out z-50 flex flex-col"
+    class="fixed top-0 right-0 overflow-x-scroll bottom-0 w-[320px] bg-bgDrAgua transform translate-x-full transition-transform duration-300 ease-in-out z-50 flex flex-col"
     style="border-left: 1px solid var(--Border-Color, #13254F);"
   >
     <div class="flex justify-between items-center">
@@ -46,7 +46,7 @@ pathname = decodeURIComponent(pathname);
         <Search client:load />
       </div>
     </div>
-    <nav class="flex flex-col items-center gap-20 mt-32 text-white">
+    <nav class="flex flex-col items-center gap-20 mt-5 text-white">
       <a
         class="hover:cursor-pointer relative after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#305197] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left text-[#F2F6FF] text-xl font-medium"
         href="/">Inicio</a
@@ -72,7 +72,7 @@ pathname = decodeURIComponent(pathname);
         >
         <div
           id="categorias-dropdown"
-          class="hidden grid grid-cols-1 w-full bg-[#0B1633] p-1 rounded-md overflow-y-auto max-h-[300px]"
+          class="hidden grid grid-cols-1 w-full bg-[#0B1633] p-1 rounded-md overflow-y-auto max-h-full"
         >
           {
             items.map((item) => (
