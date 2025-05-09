@@ -8,7 +8,7 @@ try {
   // await pb.admins.authWithPassword("pedro@gmail.com", "Pedro12345");
 
   const records = await pb.collection("categorias_es").getList(0, 100, {
-    sort: "+nombre"
+    sort: "+orden, +nombre"
   });
   items = records.items.map((item) => {
     const collectionId = "categorias_es"; // ID de la colección
