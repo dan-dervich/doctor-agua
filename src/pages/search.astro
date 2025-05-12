@@ -17,14 +17,15 @@ import CardItem from "@components/ui/CardItemForSearch.astro";
             <h1
                 class="text-center"
                 style="color: var(--Pale-Color, #F2F6FF);
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        letter-spacing: 4px;"
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: 4px;"
             >
                 BUSCADOR
             </h1>
+
             <div class="flex flex-col w-full gap-y-2">
                 <p
                     class="text-[#93A0BC]"
@@ -86,7 +87,7 @@ import CardItem from "@components/ui/CardItemForSearch.astro";
                             search_text = search_text.replace("ó", "o");
                             search_text = search_text.replace("ú", "u");
                             search_text = search_text.replace("ñ", "n");
-                            search_text = search_text.replace("®", "")
+                            search_text = search_text.replace("®", "");
                             return (
                                 <CardItem
                                     key={producto.id}
@@ -147,54 +148,57 @@ import CardItem from "@components/ui/CardItemForSearch.astro";
         </div>
     </section>
     <script is:inline>
-        const searchBox = document.getElementById("search-box");
-        const productosContainer = document.getElementById(
-            "productos-container",
-        );
-        const productos = productosContainer.querySelectorAll("a");
-
-        searchBox.addEventListener("input", (e) => {
-            let searchText = e.target.value.toLowerCase();
-            searchText = searchText.replace("á", "a");
-            searchText = searchText.replace("é", "e");
-            searchText = searchText.replace("í", "i");
-            searchText = searchText.replace("ó", "o");
-            searchText = searchText.replace("ú", "u");
-            searchText = searchText.replace("ñ", "n");
-            productos.forEach((producto) => {
-                const searchTextAttr = producto.dataset.searchText;
-                if (searchTextAttr.includes(searchText)) {
-                    producto.style.display = "flex";
-                } else {
-                    producto.style.display = "none";
-                }
+        document.addEventListener("astro:page-load", () => {
+            const searchBox = document.getElementById("search-box");
+            const productosContainer = document.getElementById(
+                "productos-container",
+            );
+            const productos = productosContainer.querySelectorAll("a");
+            searchBox.addEventListener("input", (e) => {
+                let searchText = e.target.value.toLowerCase();
+                searchText = searchText.replace("á", "a");
+                searchText = searchText.replace("é", "e");
+                searchText = searchText.replace("í", "i");
+                searchText = searchText.replace("ó", "o");
+                searchText = searchText.replace("ú", "u");
+                searchText = searchText.replace("ñ", "n");
+                productos.forEach((producto) => {
+                    const searchTextAttr = producto.dataset.searchText;
+                    if (searchTextAttr.includes(searchText)) {
+                        producto.style.display = "flex";
+                    } else {
+                        producto.style.display = "none";
+                    }
+                });
             });
-        });
-        const masProductos = document.getElementById("mas-productos-container");
-        const masProductosItems = masProductos.querySelectorAll("a");
-        masProductosItems.forEach((producto) => {
-            const searchTextAttr = producto.dataset.searchText;
-            if (searchTextAttr.includes(searchBox.value.toLowerCase())) {
-                producto.style.display = "none";
-            } else {
-                producto.style.display = "flex";
-            }
-        });
-        searchBox.addEventListener("input", (e) => {
-            let searchText = e.target.value.toLowerCase();
-            searchText = searchText.replace("á", "a");
-            searchText = searchText.replace("é", "e");
-            searchText = searchText.replace("í", "i");
-            searchText = searchText.replace("ó", "o");
-            searchText = searchText.replace("ú", "u");
-            searchText = searchText.replace("ñ", "n");
+            const masProductos = document.getElementById(
+                "mas-productos-container",
+            );
+            const masProductosItems = masProductos.querySelectorAll("a");
             masProductosItems.forEach((producto) => {
                 const searchTextAttr = producto.dataset.searchText;
-                if (searchTextAttr.includes(searchText)) {
+                if (searchTextAttr.includes(searchBox.value.toLowerCase())) {
                     producto.style.display = "none";
                 } else {
                     producto.style.display = "flex";
                 }
+            });
+            searchBox.addEventListener("input", (e) => {
+                let searchText = e.target.value.toLowerCase();
+                searchText = searchText.replace("á", "a");
+                searchText = searchText.replace("é", "e");
+                searchText = searchText.replace("í", "i");
+                searchText = searchText.replace("ó", "o");
+                searchText = searchText.replace("ú", "u");
+                searchText = searchText.replace("ñ", "n");
+                masProductosItems.forEach((producto) => {
+                    const searchTextAttr = producto.dataset.searchText;
+                    if (searchTextAttr.includes(searchText)) {
+                        producto.style.display = "none";
+                    } else {
+                        producto.style.display = "flex";
+                    }
+                });
             });
         });
     </script>
