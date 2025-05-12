@@ -1,0 +1,87 @@
+---
+import { marked } from "marked";
+const { imgSrc, nombre, desc, nombreUrl, search_text } = Astro.props;
+
+const descHTML = marked.parse(desc || "");
+---
+
+<a
+  href={`/productos/${nombreUrl}`}
+  style="display: flex;
+padding: 25px;
+flex-direction: column;
+align-items: center;
+gap: 30px;
+border-radius: 5px;
+border-top: 1px solid #111E39;
+border-right: 1px solid #111E39;
+border-left: 1px solid #111E39;
+background: #03102A;"
+  data-search-text={search_text}
+>
+  <img
+    class="w-full object-cover rounded-lg"
+    style="
+height: 200px;"
+    src={imgSrc}
+    alt=""
+  />
+  <h2
+    class="text-center"
+    style="color: var(--Paragraph-Color, #93A0BC);
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+letter-spacing: 3.2px;"
+  >
+    {nombre}
+  </h2>
+  <div style="width: 100%; overflow-x: auto;">
+    <div
+      set:html={descHTML}
+      style="color: var(--Paragraph-Color, #93A0BC);
+font-size: 16px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;"
+    />
+  </div>
+</a>
+
+<style>
+  /* Table styles */
+  :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 1rem 0;
+    background: rgba(3, 16, 42, 0.5);
+    border-radius: 5px;
+    margin-top: 10px;
+    min-width: 300px;
+  }
+
+  @media (min-width: 800px) {
+    :global(table) {
+      min-width: 500px;
+    }
+  }
+
+  :global(th),
+  :global(td) {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #111e39;
+    color: var(--Paragraph-Color, #93a0bc);
+  }
+
+  :global(th) {
+    background: rgba(17, 30, 57, 0.5);
+    font-weight: 700;
+    letter-spacing: 1.6px;
+  }
+
+  :global(tr:hover) {
+    background: rgba(19, 37, 79, 0.3);
+  }
+</style>

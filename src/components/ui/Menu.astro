@@ -1,8 +1,9 @@
 ---
 import HamburgerMenu from "@components/icons/HamburgerMenu.astro";
-import Search from "@components/ui/Search";
+// import Search from "@components/ui/Search";
 import { items } from "@lib/categories";
 import { marcas } from "@lib/marcas";
+import { Search } from "lucide-react";
 
 let pathname = Astro.url.pathname;
 
@@ -43,7 +44,14 @@ pathname = decodeURIComponent(pathname);
         </svg>
       </button>
       <div class="">
-        <Search client:load />
+        <!-- <Search client:load /> -->
+        <a
+          href="/search"
+          class="bg-[#145EFF] w-[70px] h-[70px] p-6 flex justify-center items-center flex-shrink-0 hover:bg-blue-600 transition-colors z-10"
+          aria-label="link"
+        >
+          <Search className="w-6 h-6 text-white" />
+        </a>
       </div>
     </div>
     <nav class="flex flex-col items-center gap-20 mt-5 text-white">

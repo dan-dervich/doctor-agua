@@ -8,7 +8,7 @@ try {
   // await pb.admins.authWithPassword("pedro@gmail.com", "Pedro12345");
 
   const records = await pb.collection("productos_es").getList(0, 500, {
-    expand: "pdfs_tabla",
+    expand: "pdfs_tabla, segmentos",
     sort: "-pdfs_tabla.num_de_fila",
   });
   productos = records.items.map((item) => {
