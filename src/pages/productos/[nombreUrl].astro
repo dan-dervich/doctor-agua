@@ -20,8 +20,41 @@ if (!producto) {
 
 const categoria = items.find((item) => item.productos.includes(producto.id));
 // if there's a table in producto.descripcion, add a column with the pdfs in producto.pdfs_tabla
+const pdfs = producto?.expand?.pdfs_tabla;
 
 let description = producto.descripcion;
+let isFirstRow = true;
+let index = 0;
+description = description.replace(/<\/tr>/g, () => {
+    if (pdfs?.length > 0) {
+        console.log(pdfs[index]);
+        const content = isFirstRow
+            ? "DATA SHEET"
+            : "https://doctor-agua.pockethost.io/api/files/" +
+                  pdfs[index].collectionId +
+                  "/" +
+                  pdfs[index].id +
+                  "/" +
+                  pdfs[index].pdf || "#";
+        const linkText = isFirstRow ? "DATA SHEET" : "VIEW";
+        // Cambiar al siguiente índice después de la primera fila
+        if (!isFirstRow) index = (index + 1) % pdfs.length;
+        if (isFirstRow) {
+            isFirstRow = false;
+            return `<th>
+            ${linkText}
+          </th>`;
+        }
+        isFirstRow = false;
+
+        // Devolver la fila de la tabla con enlace
+        return `<th>
+            <a href="${content}" class="text-blue-500" target="_blank" rel="noopener noreferrer">${linkText}</a>
+          </th></tr>`;
+    } else {
+        return "</tr>";
+    }
+});
 ---
 
 <Layout title={producto.nombre}>
@@ -96,9 +129,7 @@ let description = producto.descripcion;
                 <h1 class="text-4xl font-bold mb-8 text-white text-center">
                     {producto.nombre}
                 </h1>
-                <div
-                    class="flex flex-col gap-6 justify-between items-start"
-                >
+                <div class="flex flex-col gap-6 justify-between items-start">
                     <div class="w-full flex justify-center">
                         <img
                             src={producto.fotoUrl}
@@ -106,7 +137,9 @@ let description = producto.descripcion;
                             class="h-auto w-80 rounded-lg shadow-lg"
                         />
                     </div>
-                    <div class="w-full flex items-center justify-center text-[#93A0BC]">
+                    <div
+                        class="w-full flex items-center justify-center text-[#93A0BC]"
+                    >
                         <div
                             class="prose prose-invert table-wrapper text-sm"
                             set:html={description}

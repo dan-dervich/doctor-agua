@@ -1,8 +1,9 @@
 ---
+import { Image } from "astro:assets";
 import { marked } from "marked";
 const { imgSrc, nombre, desc, nombreUrl } = Astro.props;
 
-const descHTML = marked.parse(desc || '');
+const descHTML = marked.parse(desc || "");
 ---
 
 <a
@@ -20,8 +21,7 @@ background: #03102A;"
 >
   <img
     class="w-full object-cover rounded-lg"
-    style="
-height: 200px;"
+    style="height: 200px;"
     src={imgSrc}
     alt=""
   />
