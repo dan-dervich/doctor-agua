@@ -6,7 +6,8 @@ let items = [];
 
 try {
   // await pb.admins.authWithPassword("pedro@gmail.com", "Pedro12345");
-
+  // const health_res = await fetch("https://doctor-agua.pockethost.io/api/health")
+  // const health = await  health_res.json();
   const records = await pb.collection("categorias_es").getList(0, 100, {
     sort: "+nombre"
   });

@@ -86,7 +86,6 @@ const { items = [] }: { items?: Item[] } = Astro.props;
         this.nextBtn = document.getElementById("next-btn");
 
         this.currentIndex = 0;
-        console.log(this.currentIndex);
         this.itemWidth = 0;
         this.totalItems =
           this.items.length +
@@ -95,11 +94,10 @@ const { items = [] }: { items?: Item[] } = Astro.props;
             : this.calculateItemsPerView() == 2
               ? 3
               : this.calculateItemsPerView() == 3
-                ? 5
+                ? 6
                 : this.calculateItemsPerView() == 5
-                  ? 8
+                  ? 7
                   : 0); // Total items visible in the carousel
-        console.log(this.calculateItemsPerView());
         // 2 for mobile 7 for desktop
         this.itemsPerView = this.calculateItemsPerView();
         this.isTransitioning = false;
@@ -108,7 +106,6 @@ const { items = [] }: { items?: Item[] } = Astro.props;
       }
 
       calculateItemsPerView() {
-        console.log(window.innerWidth);
         if (window.innerWidth < 640) return 1;
         if (window.innerWidth < 1024) return 2;
         if (window.innerWidth < 1280) return 3;
@@ -157,7 +154,6 @@ const { items = [] }: { items?: Item[] } = Astro.props;
         // Comenzar desde el primer conjunto de items (no desde el principio del todo)
         const position = -this.totalItems * this.itemWidth;
         this.inner.style.transition = "none";
-        console.log(position);
         this.inner.style.transform = `translateX(${position}px)`;
         this.currentIndex = this.totalItems + 1;
 
@@ -184,8 +180,6 @@ const { items = [] }: { items?: Item[] } = Astro.props;
         this.currentIndex += moveAmount;
 
         const position = -this.currentIndex * this.itemWidth;
-        console.log(this.itemWidth);
-        console.log(position);
         this.inner.style.transform = `translateX(${position}px)`;
       }
 
@@ -216,8 +210,33 @@ const { items = [] }: { items?: Item[] } = Astro.props;
     }
 
     // Inicializar el carrusel
+    let carousel;
     if (document.getElementById("carousel")) {
-      new Carousel();
+      carousel = new Carousel();
     }
+
+    let timeoutId;
+    const idleTime = 3000; // Set idle time to 3 seconds
+
+    function resetTimer() {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(logout, idleTime);
+    }
+
+    function logout() {
+      // Perform scroll
+      carousel.move("next");
+      timeoutId = setTimeout(logout, idleTime);
+    }
+
+    // Listen for events that indicate user activity
+    // window.addEventListener("mousemove", resetTimer);
+    window.addEventListener("mousedown", resetTimer);
+    // window.addEventListener("keypress", resetTimer);
+    // window.addEventListener("scroll", resetTimer);
+    window.addEventListener("touchstart", resetTimer); // For touch devices
+
+    // Set initial timeout on page load
+    resetTimer();
   })();
 </script>

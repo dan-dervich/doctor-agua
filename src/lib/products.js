@@ -7,9 +7,9 @@ let productos = [];
 try {
   // await pb.admins.authWithPassword("pedro@gmail.com", "Pedro12345");
 
-  const records = await pb.collection("productos_es").getList(0, 500, {
-    expand: "pdfs_tabla, segmentos",
-    sort: "-pdfs_tabla.num_de_fila",
+  const records = await pb.collection("productos_es").getList(0, 1000, {
+    expand: "pdfs_tabla, segmentos,pdfs_carta, pdfs_ficha",
+    sort: "+orden",
   });
   productos = records.items.map((item) => {
     const collectionId = "productos_es"; // ID de la colección

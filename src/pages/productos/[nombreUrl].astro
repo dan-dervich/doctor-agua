@@ -13,7 +13,6 @@ export async function getStaticPaths() {
 
 const { nombreUrl } = Astro.params;
 const producto = productos.find((p) => p.urlName === nombreUrl);
-
 if (!producto) {
     return Astro.redirect("/404");
 }
@@ -138,12 +137,29 @@ description = description.replace(/<\/tr>/g, () => {
                         />
                     </div>
                     <div
-                        class="w-full flex items-center justify-center text-[#93A0BC]"
+                        class="w-full flex items-center justify-center flex-col text-[#93A0BC]"
                     >
                         <div
                             class="prose prose-invert table-wrapper text-sm"
                             set:html={description}
                         />
+                        {
+                            producto?.expand?.pdfs_carta?.map(
+                                (card_pdf: any) => {
+                                    // console.log(card_pdf);
+                                    return (
+                                        <a
+                                            href={`https://doctor-agua.pockethost.io/api/files/${card_pdf.collectionId}/${card_pdf.id}/${card_pdf.pdf}`}
+                                            class="text-blue-500 hover:underline ml-4"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {card_pdf.texto_link}
+                                        </a>
+                                    );
+                                },
+                            )
+                        }
                     </div>
                 </div>
             </div>

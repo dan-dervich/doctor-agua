@@ -1,7 +1,10 @@
 <section
-  class="relative h-[100vh] text-white flex items-center justify-center flex-col overflow-hidden"
+  class="min-h-[100vh] text-white flex items-center justify-center flex-col overflow-hidden"
+  style="background: url('/bgHero.png') no-repeat center center; background-size: cover; background-attachment: fixed;@supports (-webkit-touch-callout: inherit) {
+      background-attachment: scroll;
+    }"
 >
-  <img
+  <!-- <img
     src="/bgHero.png"
     alt="Background"
     class="inset-0 w-full h-full object-cover bg-fixed bg-center -z-10 fixed"
@@ -10,15 +13,15 @@
     @supports (-webkit-touch-callout: inherit) {
       background-attachment: scroll;
     }"
-  />
+  /> -->
   <div
-    class="flex flex-col items-center justify-center gap-[50px] lg:w-[900px] sm:w-[450px] w-full"
+    class="flex flex-col items-center justify-center gap-[50px] lg:w-[900px] sm:w-[450px] w-full lg:mt-[15vh] mb-[5vh]"
     style="
-height: 450px;
-flex-shrink: 0;"
+    flex-shrink: 0;"
   >
+    <!-- height: 450px; -->
     <div
-      class="flex flex-col items-center justify-center gap-y-[20px] text-center"
+      class="flex min-h-[70vh] flex-col items-center justify-center gap-y-[20px] text-center"
     >
       <p
         class="text-[12px] lg:text-[16px]"
@@ -78,7 +81,7 @@ font-weight: 500;
 letter-spacing: .5px;
       "
       >
-        En Doctor Agua, nos especializamos en soluciones avanzadas para el
+        Doctor Agua, nos especializamos en soluciones avanzadas para el
         tratamiento de agua, orientadas al sector comercial e industrial.
         Ofrecemos equipamiento de alta performance como membranas de ósmosis
         inversa Toray, ablandadores automáticos Clack y sistemas de desinfección
