@@ -37,16 +37,17 @@ letter-spacing: 3.2px;"
   >
     {nombre}
   </h2>
-  <div style="width: 100%; overflow-x: auto;">
-    <div
-      set:html={descHTML}
-      style="color: var(--Paragraph-Color, #93A0BC);
+  <!-- <div style="width: 100%; overflow-x: auto;"> -->
+  <div
+    set:html={descHTML}
+    style="color: var(--Paragraph-Color, #93A0BC);
 font-size: 16px;
 font-style: normal;
 font-weight: 300;
-line-height: normal;"
-    />
-  </div>
+line-height: normal;
+"
+  />
+  <!-- </div> -->
 </a>
 
 <style>
@@ -58,15 +59,7 @@ line-height: normal;"
     background: rgba(3, 16, 42, 0.5);
     border-radius: 5px;
     margin-top: 10px;
-    min-width: 300px;
   }
-
-  @media (min-width: 800px) {
-    :global(table) {
-      min-width: 500px;
-    }
-  }
-
   :global(th),
   :global(td) {
     padding: 12px;

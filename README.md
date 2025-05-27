@@ -38,19 +38,19 @@ TODO:
 [x] cambiar nanofiltracion a csm
 [x] csm sacar residenciales y poner membranas de osmosis inversa de bajo caudal CSM de 50gpd
 [x] cambiar mb -> re
-[    ] niple, cambiar mini_desc(1/4"-1/2" a desde 1/4" a 1/2")
-[ ] flotador, cambiar mini_desc(flotador plastico y controlador de nivel para tanques)
-[ ] valvula antiretorno(desde 1/8" hasta 1") pedir a martin que mande foto de las valvulas antiretorno
-[ ] agregar limpiadores de membranas antiincrustantes
-[ ] bomba presurizadora titulo aparece en ingles y moverlo a otra pagina con otras bombas codigo esta en ingles en vez de español
-[ ] agregar en bombas CAT que trabajamos toda la linea de bombas cat, pida su presupuesto de la bomba que necesite.
-[ ] configurador bombas procon(pagina 14 del pdf) primero en la pagina de bombas procon
-[ ] editar fotos carcasas a que digan los tamaños
-[ ] agregar a todos los acoples desde x medida a x medida
-[ ] clip de seguridad agregar todas las medidas en el titulo
+[x] flotador, cambiar mini_desc(flotador plastico y controlador de nivel para tanques)
+[x] niple, cambiar mini_desc(1/4"-1/2" a desde 1/4" a 1/2")
+[x] agregar limpiadores de membranas antiincrustantes
+[x] bomba presurizadora titulo aparece en ingles y moverlo a otra pagina con otras bombas codigo esta en ingles en vez de español
+[x] agregar en bombas CAT que trabajamos toda la linea de bombas cat, pida su presupuesto de la bomba que necesite.
+[x] valvula antiretorno(desde 1/8" hasta 1") pedir a martin que mande foto de las valvulas antiretorno
+[x] configurador bombas procon(pagina 14 del pdf) primero en la pagina de bombas procon
+[x] agregar a todos los acoples desde x medida a x medida
+[x] editar fotos carcasas a que digan los tamaños
+[x] clip de seguridad agregar todas las medidas en el titulo
+[x] filtro rusco de 3/4"-2"
+[ ] poner fittings como aparecen en el catolog
 [ ] agregar purificadores uv y otras palabras clave en uv
 [ ] agregar linea SHFM
-[ ] filtro rusco de 3/4"-2"
-[ ] tanques 6x18",8x35", 9x48", 10x44", 10x54", 12x48", 13x54", 14x65", 16x65" para otras medidas consultar in mini desc?
+[ ] tanques 6x18",8x35", 9x48", 10x44", 10x54", 12x48", 13x54", 14x65", 16x65" para otras medidas consultar (mini desc?)
 [ ] sacar de tabla todas las membranas y hacer pagina ind para cada modelo
-[ ] poner fittings como aparecen en el catolog
