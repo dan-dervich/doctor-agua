@@ -38,7 +38,7 @@ TODO:
 [x] cambiar nanofiltracion a csm
 [x] csm sacar residenciales y poner membranas de osmosis inversa de bajo caudal CSM de 50gpd
 [x] cambiar mb -> re
-[ ] niple, cambiar mini_desc(1/4"-1/2" a desde 1/4" a 1/2")
+[    ] niple, cambiar mini_desc(1/4"-1/2" a desde 1/4" a 1/2")
 [ ] flotador, cambiar mini_desc(flotador plastico y controlador de nivel para tanques)
 [ ] valvula antiretorno(desde 1/8" hasta 1") pedir a martin que mande foto de las valvulas antiretorno
 [ ] agregar limpiadores de membranas antiincrustantes
