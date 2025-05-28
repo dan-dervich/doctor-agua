@@ -49,8 +49,9 @@ TODO:
 [x] editar fotos carcasas a que digan los tamaños
 [x] clip de seguridad agregar todas las medidas en el titulo
 [x] filtro rusco de 3/4"-2"
+[x] agregar linea SHFM
+[x] tanques 6x18",8x35", 9x48", 10x44", 10x54", 12x48", 13x54", 14x65", 16x65" para otras medidas consultar (mini desc?)
 [ ] poner fittings como aparecen en el catolog
 [ ] agregar purificadores uv y otras palabras clave en uv
-[ ] agregar linea SHFM
-[ ] tanques 6x18",8x35", 9x48", 10x44", 10x54", 12x48", 13x54", 14x65", 16x65" para otras medidas consultar (mini desc?)
-[ ] sacar de tabla todas las membranas y hacer pagina ind para cada modelo
+[x] sacar de tabla todas las membranas y hacer pagina ind para cada modelo
+[x] cambiar direccion membranas

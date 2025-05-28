@@ -43,7 +43,11 @@ filteredProductos.forEach((product) => {
 const uniqueSegment = [
   ...new Set(filteredSegmentos?.map((segmento) => segmento)),
 ];
-
+uniqueSegment.sort((a, b) => {
+  if (a.orden > b.orden) return -1; // Marca primero
+  if (!a.orden < b.orden) return 1; // Marca primero
+  return a.orden; // Orden alfabético
+});
 let no_products = false;
 
 if (filteredProductos.length === 0) {
