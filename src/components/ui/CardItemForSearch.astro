@@ -1,8 +1,9 @@
 ---
-import { marked } from "marked";
+// import { marked } from "marked";
 const { imgSrc, nombre, desc, nombreUrl, search_text } = Astro.props;
 
-const descHTML = marked.parse(desc || "");
+// const descHTML = marked.parse(desc || "");
+const descHTML = desc || "";
 ---
 
 <a

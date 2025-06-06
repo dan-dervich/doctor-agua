@@ -51,7 +51,52 @@ TODO:
 [x] filtro rusco de 3/4"-2"
 [x] agregar linea SHFM
 [x] tanques 6x18",8x35", 9x48", 10x44", 10x54", 12x48", 13x54", 14x65", 16x65" para otras medidas consultar (mini desc?)
-[ ] poner fittings como aparecen en el catolog
-[ ] agregar purificadores uv y otras palabras clave en uv
 [x] sacar de tabla todas las membranas y hacer pagina ind para cada modelo
 [x] cambiar direccion membranas
+[x] poner fittings como aparecen en el catolog
+[x] adaptador para llave 3/4" hembra a 1/4" tubo
+[x] FILTROS MULTICARTUCHO DE ACERO INOXIDABLE agregar caudal en nombree
+[x] https://www.rusco.com/sediment-filter-products#fresh data sheet rusco
+[x] Filtros Para Purificar Agua separar productos en 1 cartucho(simple), 2 cartuchos(doble) 3 cartuchos(triple)
+[x] foto shfm-290
+[x] filtros y ablandadores poner todos los que estan en afw(https://www.allforwater.com/category/CLACK%20SOFTENERS/)
+[x] titulo de pagina: ablandadores residenciales comerciales e industriales
+[x] a los grifos agregar: para purificador de agua bajo mesada
+[x] manometros poner tamaños en mini desc
+[x] agregar caudal en mini desc membranas
+[x] tmg10d, tm710d, tm720d-400, tm810v, tmg820v-400, 
+[x] separar membranas CSM desde re-25 hasta re-150
+[x] separar tambien las 2,5 de las 4,0
+[x] mover csm nanofiltracion a categoria privada
+[x] Monitores Y Testers -> controladores de osmosis inversa y medidores de conductividad (separar en dos categorias controladores por un lado medidores por el otro)
+[x] sacar s2q-oz de ozono
+[x] sacar accesorios para instalacion
+[x] agregar tamaños en mini desc portamembranas
+[x] MEDIO PARA ELIMINACION DE SEDIMENTOS agregarle filter ag plus
+[x] agregar kdf-85
+[x] agregar birm donde esta el greensand plus
+[x] sacar foto de soportes para montaje de soportes y clips
+[x] agregar tabla a la mini desc de clips plasticos
+[x] agregar in - out en la mini descripcion
+[x] DISTRIBUIDORES SUPERIORES -> para filtros y ablandadores de agua
+[x] replicar en categoria de valvulas tambien
+[x] valvula aguja agregar tamaños en la mini desc
+[x] valvula aguja cambiar fnpt -> NPT
+[x] valvulas selenoide poner tabla de tamaños en mini desc y cambiar npt
+[x] poner foto osomsis residencial de afw en dragua
+[x] valvula derivadora tabla talles
+[x] (acople rapido para tratamiento de agua y purificadores de agua) keyword para acoples.
+[x] poner en nombres de acoples acople rapido para tratamiento de agua...
+[x] cambiar en afw shut off valve por ball valve (https://www.apecwater.com/pages/whole-house-systems)
+[ ] agregar purificadores uv y otras palabras clave en uv
+[ ] agregar categoria lamparas uv como en afw(y lamparas)
+[ ] agregar categoria de balastros viqua
+[ ] agregar categoria produtos myron menos (MEDIDOR DE TDS DE BOLSILLO)
+[ ] myron medidores de calidad de agua
+[ ] poner ozotech en la pagina
+[ ] pedirle a richard foto de calicta
+[ ] agregar datasheet a todas las valvulas clack
+[ ] pedir fotos de las bolsas de resina cationica, anionica, y desionizadora
+[ ] en afw y dragua poner uvs de luminor-> todos los modelos que tengan caudal mas grande que 280gpd
+[ ] poner sistemas de TOC de luminor nombre: equipos de TOC
+[ ] membrana blf csm todos los modelos(afw y dr-agua)
