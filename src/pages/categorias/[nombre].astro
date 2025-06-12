@@ -14,7 +14,6 @@ export async function getStaticPaths() {
 const { nombre } = Astro.params;
 
 const item = items.find((product) => product.nombre === nombre);
-  
 const filteredProductos = productos.filter((product) =>
   item.productos.includes(product.id)
 );
@@ -149,8 +148,10 @@ line-height: 1.2;"
       {item.nombre.split(" ").map((word:string) => (
           word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()+ " "
       ))}
-      {/* {item.nombre.charAt(0).toUpperCase() + item.nombre.slice(1).toLowerCase()} */}
     </h1>
+    <div class="text-white/75 lg:w-1/2 w-full text-center">
+    <p set:html={item?.expand?.desc?.descripcion} class="text-white/75"></p>
+    </div>
     <div class="flex flex-col gap-4">
       <div class="flex flex-wrap justify-center lg:gap-5 md:gap-2 gap-1">
         {

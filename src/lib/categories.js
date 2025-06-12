@@ -9,6 +9,7 @@ try {
   // const health_res = await fetch("https://doctor-agua.pockethost.io/api/health")
   // const health = await  health_res.json();
   const records = await pb.collection("categorias_es").getList(0, 100, {
+    expand: "desc",
     sort: "+nombre"
   });
   items = records.items.map((item) => {

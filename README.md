@@ -88,15 +88,22 @@ TODO:
 [x] (acople rapido para tratamiento de agua y purificadores de agua) keyword para acoples.
 [x] poner en nombres de acoples acople rapido para tratamiento de agua...
 [x] cambiar en afw shut off valve por ball valve (https://www.apecwater.com/pages/whole-house-systems)
-[ ] agregar purificadores uv y otras palabras clave en uv
-[ ] agregar categoria lamparas uv como en afw(y lamparas)
-[ ] agregar categoria de balastros viqua
+[x] agregar purificadores uv y otras palabras clave en uv
+[x] agregar categoria lamparas uv como en afw(y lamparas)
+[x] agregar categoria de balastros viqua
+[x] change h1 to black in afw
+[x] change foto cooler afw category
+[x] pedir fotos de las bolsas de resina cationica, anionica, y desionizadora
+[x] pedirle a richard foto de calicta
+[x] consider removing space urls categories from sitemap
 [ ] agregar categoria produtos myron menos (MEDIDOR DE TDS DE BOLSILLO)
 [ ] myron medidores de calidad de agua
 [ ] poner ozotech en la pagina
-[ ] pedirle a richard foto de calicta
 [ ] agregar datasheet a todas las valvulas clack
-[ ] pedir fotos de las bolsas de resina cationica, anionica, y desionizadora
 [ ] en afw y dragua poner uvs de luminor-> todos los modelos que tengan caudal mas grande que 280gpd
 [ ] poner sistemas de TOC de luminor nombre: equipos de TOC
 [ ] membrana blf csm todos los modelos(afw y dr-agua)
+[ ] consider appliedmembranes(nav distribution), dervich.com.ar(sidebar), and pureaqua(nav ideas)
+<!-- [ ] create main categories for allforwater so that you can enter allforwater.com/ro/ and this is a main page specific for ro products -->
+
+grupos para doctor-agua ->
